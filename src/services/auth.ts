@@ -29,6 +29,21 @@ export const login = async (email: string, password: string) => {
   }
 };
 
+export const register = async (email: string, password: string, name: string) => {
+  try {
+    const user = await account.create(
+      ID.unique(),
+      email,
+      password,
+      name
+    );
+    return user;
+  } catch (error) {
+    console.log("Signup error:", error);
+    throw error;
+  }
+};
+
 export const logout = async () => {
   try {
     await account.deleteSession("current");

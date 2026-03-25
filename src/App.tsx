@@ -1,31 +1,17 @@
-import { useEffect, useState } from "react";
-import {  getDocuments } from "./services/db";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import Login from "./pages/Login";
+import Register from "./pages/Register";
+import "./App.css";
 
 function App() {
-  const [data, setData] = useState<any[]>([]);
-
-  useEffect(() => {
-    const run = async () => {
-      try {
-        const docs = await getDocuments();
-        
-
-        setData(docs);
-      } catch (err) {
-        console.log(err);
-      }
-    };
-
-    run();
-  }, []);
-
   return (
-    <div>
-      Appwrite Working ✅
-      <br />
-      <br />
-      <pre>{JSON.stringify(data, null, 2)}</pre>
-    </div>
+    <BrowserRouter>
+      <Routes>
+        <Route path="/" element={<h1>Home</h1>} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/register" element={<Register />} />
+      </Routes>
+    </BrowserRouter>
   );
 }
 
