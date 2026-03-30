@@ -39,6 +39,8 @@ const addTrackerData = async (data: CreateTrackerInput) => {
         data: {
             ...data,
             user_id: user.$id,
+            userName: user.name,
+            userEmail: user.email,
         },
         permissions: [
             Permission.read(Role.user(user.$id)),
@@ -77,6 +79,8 @@ const getImageUrl = (imageId?: string) => {
     fileId: imageId,
   });
 };
+
+
         
 
 export { getTrackerData, addTrackerData ,UploadImage,getImageUrl};

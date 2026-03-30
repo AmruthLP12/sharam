@@ -48,7 +48,7 @@ const TrackerForm = () => {
   };
 
   return (
-    <div className="flex justify-center items-center min-h-screen bg-muted/40 p-6">
+    <div className="flex justify-center items-center  bg-muted/40 p-6">
       <Card className="w-full max-w-md shadow-xl">
         <CardHeader>
           <CardTitle>Add Tracker Entry</CardTitle>

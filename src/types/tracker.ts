@@ -11,6 +11,8 @@ type TrackerRow = {
   movieName: string;
   movieDesc?: string;
   imageId?: string;
+  userName?: string;
+  userEmail?: string;
 };
 
 

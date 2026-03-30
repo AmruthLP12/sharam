@@ -10,6 +10,7 @@ import {
   CardFooter,
 } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
+import Navbar from "@/components/Navbar";
 
 const Tracker = () => {
   const {
@@ -22,6 +23,8 @@ const Tracker = () => {
   });
 
   return (
+    <>
+    <Navbar />
     <div className="min-h-screen bg-muted/40 p-6">
       {/* Header */}
       <div className="flex justify-between items-center mb-6">
@@ -92,6 +95,12 @@ const Tracker = () => {
                 <p className="text-sm text-muted-foreground line-clamp-3">
                   {item.movieDesc}
                 </p>
+                <p>
+                  <span className="text-xs text-muted-foreground">
+                    Created by {item.userName || "Unknown User"} - {item.userEmail || "No Email"}
+                  </span>
+                  
+                </p>
               </CardContent>
 
               <CardFooter className="text-xs text-muted-foreground px-4 pb-4">
@@ -103,6 +112,7 @@ const Tracker = () => {
         })}
       </div>
     </div>
+    </>
   );
 };
 

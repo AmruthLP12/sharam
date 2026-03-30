@@ -46,7 +46,7 @@ export const register = async (email: string, password: string, name: string) =>
 
 export const logout = async () => {
   try {
-    await account.deleteSession("current");
+    await account.deleteSessions();
   } catch (error) {
     console.log("Logout error:", error);
   }
@@ -58,6 +58,16 @@ export const getSession = async () => {
     return session;
   } catch (error) {
     console.log("Get session error:", error);
+    throw error;
+  }
+};
+
+export const getUser = async () => {
+  try {
+    const user = await account.get();
+    return user;
+  } catch (error) {
+    console.log("Get user error:", error);
     throw error;
   }
 };
