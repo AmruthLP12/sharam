@@ -1,29 +1,24 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
+import { useQuery } from "@tanstack/react-query";
 import { getFilteredTests } from "../services/test";
-import type { TestRow } from "../types/test";
 
 const Home = () => {
-  const [data, setData] = useState<TestRow[]>([]);
   const [filters, setFilters] = useState({
     difficulty: "",
     active: undefined as boolean | undefined,
   });
 
-  useEffect(() => {
-    const fetchData = async () => {
-      const result = await getFilteredTests(filters);
-      setData(result);
-    };
-
-    fetchData();
-  }, [filters]); // 🔥 re-fetch when filters change
+  const { data = [], isLoading, isError } = useQuery({
+    queryKey: ["tests", filters], // 🔥 important (cache + refetch)
+    queryFn: () => getFilteredTests(filters),
+  });
 
   return (
     <div className="min-h-screen bg-gray-100 p-6">
       <h1 className="text-2xl font-bold mb-6">Tests</h1>
 
+      {/* Filters */}
       <div className="flex flex-wrap gap-4 mb-6">
-        {/* Difficulty Filter */}
         <select
           className="border rounded-lg px-3 py-2"
           value={filters.difficulty}
@@ -40,15 +35,14 @@ const Home = () => {
           <option value="hard">Hard</option>
         </select>
 
-        {/* Status Filter */}
         <select
           className="border rounded-lg px-3 py-2"
           value={
             filters.active === undefined
               ? ""
               : filters.active
-                ? "active"
-                : "inactive"
+              ? "active"
+              : "inactive"
           }
           onChange={(e) => {
             const value = e.target.value;
@@ -65,7 +59,6 @@ const Home = () => {
           <option value="inactive">Inactive</option>
         </select>
 
-        {/* Reset Button */}
         <button
           onClick={() => setFilters({ difficulty: "", active: undefined })}
           className="bg-gray-200 px-4 py-2 rounded-lg hover:bg-gray-300"
@@ -74,6 +67,13 @@ const Home = () => {
         </button>
       </div>
 
+      {/* 🔥 Loading State */}
+      {isLoading && <p>Loading...</p>}
+
+      {/* 🔥 Error State */}
+      {isError && <p>Something went wrong</p>}
+
+      {/* Data */}
       <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
         {data.map((item) => (
           <div
@@ -88,8 +88,8 @@ const Home = () => {
                   item.difficultyLevel === "hard"
                     ? "bg-red-100 text-red-600"
                     : item.difficultyLevel === "medium"
-                      ? "bg-yellow-100 text-yellow-600"
-                      : "bg-green-100 text-green-600"
+                    ? "bg-yellow-100 text-yellow-600"
+                    : "bg-green-100 text-green-600"
                 }`}
               >
                 {item.difficultyLevel}

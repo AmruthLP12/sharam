@@ -18,8 +18,6 @@ const getTestData = async (): Promise<TestRow[]> => {
   }
 };
 
-export default getTestData;
-
 
 const getFiveLatestTestData = async (): Promise<TestRow[]> => {
   try {
